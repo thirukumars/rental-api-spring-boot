@@ -1,18 +1,38 @@
 package com.HouseRent.POC.service;
 
+import com.HouseRent.POC.Repository.ProductRepo;
 import com.HouseRent.POC.model.Product;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class ProductService {
-    List<Product> products = Arrays.asList(
-            new Product("chair", 1, 10.0),
-            new Product("Iron box", 2, 30)
-    );
+
+    @Autowired
+    ProductRepo repo;
+
+
     public List<Product> getProducts() {
-        return products;
+        return repo.findAll();
+    }
+
+    public Product getProductById(int id) {
+        return repo.findById(id).orElse(new Product("test", 1, 1));
+    }
+
+    public void addProduct(Product prod) {
+        repo.save(prod);
+    }
+
+    public void updateProduct(Product prod) {
+        repo.save(prod);
+    }
+
+    public void deleteProduct(int prodId) {
+        repo.deleteById(prodId);
     }
 }
